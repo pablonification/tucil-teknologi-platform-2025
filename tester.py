@@ -5,14 +5,14 @@ import base64
 import json
 
 # ganti dengan userid dan shared secret yang ingin dicoba
-userid = "arqila"
-shared_secret = "ii2210_arqila"
+userid = "sister"
+shared_secret = "ii2210_sister_keren"
 
 # ganti dengan url server kalian
 server_url = "http://47.129.57.244:17787/motd"
 
 # ganti dengan motd yang diinginkan
-motd = {"motd" : "ahlan wa sahlan"}
+motd = {"motd" : "ahlan wa sahlan wow"}
 
 s = base64.b32encode(shared_secret.encode("utf-8")).decode("utf-8")
 totp = pyotp.TOTP(s=s,digest="SHA256",digits=8)
