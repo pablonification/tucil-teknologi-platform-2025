@@ -53,13 +53,14 @@ async def get_motd_html(session: SessionDep):
         <title>Message of the Day</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rubik+80s+Fade&display=swap" rel="stylesheet">
         <style>
             :root {{
                 --primary-color: #FFB7C3;
                 --secondary-color: #BCF4F5;
                 --card-bg: #F5F5F5;
                 --text-color: #575757;
+                --nav-highlight: #ffb7c3;
             }}
             
             * {{
@@ -72,11 +73,54 @@ async def get_motd_html(session: SessionDep):
                 font-family: 'Inter', sans-serif;
                 min-height: 100vh;
                 display: flex;
-                justify-content: center;
-                align-items: center;
+                flex-direction: column;
                 background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
                 margin: 0;
                 padding: 20px;
+            }}
+
+            .navbar {{
+                position: fixed;
+                top: 0;
+                left: 0;
+                right: 0;
+                z-index: 50;
+                padding: 12px;
+                display: flex;
+                justify-content: center;
+            }}
+
+            .nav-container {{
+                background-color: black;
+                color: white;
+                border-radius: 20px;
+                padding: 8px 16px;
+                display: flex;
+                align-items: center;
+                gap: 16px;
+            }}
+
+            .nav-link {{
+                color: rgba(255, 255, 255, 0.9);
+                text-decoration: none;
+                font-size: 16px;
+                font-weight: 500;
+                padding: 4px 8px;
+                border-radius: 8px;
+                transition: all 0.3s;
+            }}
+
+            .nav-link:hover {{
+                background-color: var(--nav-highlight);
+                color: black;
+            }}
+
+            .content {{
+                flex: 1;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                padding-top: 60px;
             }}
 
             .motd-container {{
@@ -88,6 +132,18 @@ async def get_motd_html(session: SessionDep):
                 max-width: 600px;
                 width: 90%;
                 transition: transform 0.3s ease;
+                position: relative;
+                overflow: hidden;
+            }}
+
+            .motd-container::before {{
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 4px;
+                background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
             }}
 
             .motd-container:hover {{
@@ -110,6 +166,27 @@ async def get_motd_html(session: SessionDep):
                 font-style: italic;
                 margin-bottom: 24px;
                 letter-spacing: -0.05em;
+                position: relative;
+            }}
+
+            .motd-text::before,
+            .motd-text::after {{
+                content: '"';
+                font-family: 'Rubik 80s Fade', system-ui;
+                font-size: 3em;
+                color: var(--primary-color);
+                position: absolute;
+                opacity: 0.5;
+            }}
+
+            .motd-text::before {{
+                left: -20px;
+                top: -20px;
+            }}
+
+            .motd-text::after {{
+                right: -20px;
+                bottom: -40px;
             }}
 
             .error-text {{
@@ -119,22 +196,48 @@ async def get_motd_html(session: SessionDep):
                 margin-bottom: 16px;
             }}
 
-            a {{
+            .creator-text {{
+                font-size: 0.9em;
+                color: #666;
+                margin-top: -16px;
+                margin-bottom: 24px;
+            }}
+
+            .button {{
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
                 color: #3498db;
                 text-decoration: none;
                 font-weight: 500;
-                transition: color 0.3s;
+                transition: all 0.3s;
+                padding: 8px 16px;
+                border-radius: 8px;
+                background-color: #f8f9fa;
             }}
 
-            a:hover {{
-                color: #2980b9;
-                text-decoration: underline;
+            .button:hover {{
+                background-color: #e9ecef;
+                transform: translateY(-2px);
+            }}
+
+            .button svg {{
+                width: 16px;
+                height: 16px;
             }}
         </style>
     </head>
     <body>
-        <div class="motd-container">
-            {content}
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="/" class="nav-link">Home</a>
+                <a href="/motd" class="nav-link">Message of the Day</a>
+            </div>
+        </nav>
+        <div class="content">
+            <div class="motd-container">
+                {content}
+            </div>
         </div>
     </body>
     </html>
@@ -144,7 +247,12 @@ async def get_motd_html(session: SessionDep):
         error_content = """
             <h1>Message Not Found</h1>
             <p class="error-text">No message of the day available at the moment.</p>
-            <p><a href="/">← Back to Home</a></p>
+            <a href="/" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Home
+            </a>
         """
         return HTMLResponse(content=html_content_base.format(content=error_content), status_code=404)
     
@@ -152,8 +260,14 @@ async def get_motd_html(session: SessionDep):
     
     motd_content = f"""
         <h1>Message of the Day</h1>
-        <p class="motd-text">"{random_motd.motd}"</p>
-        <p><a href="/">← Back to Home</a></p>
+        <p class="motd-text">{random_motd.motd}</p>
+        <p class="creator-text">Posted by {random_motd.creator}</p>
+        <a href="/" class="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+        </a>
     """
     
     return HTMLResponse(content=html_content_base.format(content=motd_content))
