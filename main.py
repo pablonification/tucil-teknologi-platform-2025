@@ -55,20 +55,20 @@ async def get_motd_html(session: SessionDep):
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rubik+80s+Fade&display=swap" rel="stylesheet">
         <style>
-            :root {
+            :root {{
                 --primary-color: #FFB7C3;
                 --secondary-color: #BCF4F5;
                 --card-bg: #F5F5F5;
                 --text-color: #575757;
-            }
+            }}
             
-            * {
+            * {{
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
-            }
+            }}
 
-            body {
+            body {{
                 font-family: 'Inter', sans-serif;
                 min-height: 100vh;
                 display: flex;
@@ -76,16 +76,16 @@ async def get_motd_html(session: SessionDep):
                 background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
                 margin: 0;
                 padding: 20px;
-            }
+            }}
 
-            .content {
+            .content {{
                 flex: 1;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-            }
+            }}
 
-            .motd-container {
+            .motd-container {{
                 background-color: white;
                 padding: 32px;
                 border-radius: 12px;
@@ -96,9 +96,9 @@ async def get_motd_html(session: SessionDep):
                 transition: transform 0.3s ease;
                 position: relative;
                 overflow: hidden;
-            }
+            }}
 
-            .motd-container::before {
+            .motd-container::before {{
                 content: '';
                 position: absolute;
                 top: 0;
@@ -106,21 +106,21 @@ async def get_motd_html(session: SessionDep):
                 right: 0;
                 height: 4px;
                 background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            }
+            }}
 
-            .motd-container:hover {
+            .motd-container:hover {{
                 transform: translateY(-8px);
-            }
+            }}
 
-            h1 {
+            h1 {{
                 color: #2c3e50;
                 margin-bottom: 20px;
                 font-weight: 600;
                 font-size: clamp(1.6rem, 2vw, 1.875rem);
                 letter-spacing: -0.05em;
-            }
+            }}
 
-            .motd-text {
+            .motd-text {{
                 font-size: clamp(1.25rem, 1.5vw, 1.5rem);
                 color: var(--text-color);
                 line-height: 1.6;
@@ -129,43 +129,43 @@ async def get_motd_html(session: SessionDep):
                 margin-bottom: 24px;
                 letter-spacing: -0.05em;
                 position: relative;
-            }
+            }}
 
             .motd-text::before,
-            .motd-text::after {
+            .motd-text::after {{
                 content: '"';
                 font-family: 'Rubik 80s Fade', system-ui;
                 font-size: 3em;
                 color: var(--primary-color);
                 position: absolute;
                 opacity: 0.5;
-            }
+            }}
 
-            .motd-text::before {
+            .motd-text::before {{
                 left: -20px;
                 top: -20px;
-            }
+            }}
 
-            .motd-text::after {
+            .motd-text::after {{
                 right: -20px;
                 bottom: -40px;
-            }
+            }}
 
-            .error-text {
+            .error-text {{
                 font-size: 1.1em;
                 color: #e74c3c;
                 font-weight: 400;
                 margin-bottom: 16px;
-            }
+            }}
 
-            .creator-text {
+            .creator-text {{
                 font-size: 0.9em;
                 color: #666;
                 margin-top: -16px;
                 margin-bottom: 24px;
-            }
+            }}
 
-            .button {
+            .button {{
                 display: inline-flex;
                 align-items: center;
                 gap: 8px;
@@ -176,17 +176,17 @@ async def get_motd_html(session: SessionDep):
                 padding: 8px 16px;
                 border-radius: 8px;
                 background-color: #f8f9fa;
-            }
+            }}
 
-            .button:hover {
+            .button:hover {{
                 background-color: #e9ecef;
                 transform: translateY(-2px);
-            }
+            }}
 
-            .button svg {
+            .button svg {{
                 width: 16px;
                 height: 16px;
-            }
+            }}
         </style>
     </head>
     <body>
