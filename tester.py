@@ -21,5 +21,5 @@ x = f"{userid}:" + totp.now()
 a = "Basic " + base64.b64encode(bytes(x,encoding="ascii")).decode("ascii")
 
 resp = requests.post(url=server_url, headers={"Authorization" : a}, json=motd)
-
+# 
 print(resp.content.decode("utf-8"))
