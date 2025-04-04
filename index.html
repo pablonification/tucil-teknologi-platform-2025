@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Arqila Surya Putra - Portfolio</title>
+  <!-- Load font penting -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik+80s+Fade&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Base */
+    :root {
+      --primary-color: #FFB7C3;
+      --secondary-color: #BCF4F5;
+      --card-bg: #F5F5F5;
+      --text-color: #575757;
+      --nav-highlight: #ffb7c3;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* gradient */
+    .bg-gradient {
+      position: fixed;
+      inset: 0;
+      min-height: 100vh;
+      background: linear-gradient(to bottom, var(--primary-color), var(--secondary-color));
+      z-index: -10;
+    }
+
+    .content {
+      position: relative;
+      z-index: 0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      padding: 12px;
+      display: flex;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .nav-container {
+      background-color: black;
+      color: white;
+      border-radius: 20px;
+      padding: 4px 6px;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .nav-highlight {
+      position: absolute;
+      height: 85%;
+      transform: translateX(0);
+      background-color: var(--nav-highlight);
+      border-radius: 16px;
+      transition: all 0.5s ease-out;
+      opacity: 0.75;
+    }
+
+    .nav-icon {
+      position: relative;
+      padding: 4px 8px;
+      display: inline-block;
+    }
+
+    .nav-icon img {
+      width: 24px;
+      height: 24px;
+      position: relative;
+      z-index: 10;
+      transition: transform 0.5s;
+    }
+
+    .nav-icon img.spinning {
+      transform: rotate(360deg);
+    }
+
+    .nav-link {
+      position: relative;
+      padding: 4px 8px;
+      font-size: 16px;
+      font-weight: 500;
+      white-space: nowrap;
+      transition: color 0.3s;
+      text-decoration: none;
+      color: rgba(255, 255, 255, 0.9);
+    }
+
+    .nav-link span {
+      position: relative;
+      z-index: 10;
+      transition: color 0.3s;
+    }
+
+    .nav-link.active span {
+      color: #FFD8DF;
+    }
+
+    .hero {
+      max-width: 100%;
+      margin: 0 8px;
+      padding: 2px 8px;
+      padding-top: 160px;
+    }
+
+    .hero-description {
+      margin-bottom: 32px;
+      max-width: 700px;
+      line-height: 1.2;
+      letter-spacing: -0.05em;
+      color: var(--text-color);
+      font-size: clamp(1rem, 1.5vw, 2.5rem);
+    }
+
+    .hero-title {
+      position: relative;
+      margin-bottom: 32px;
+      font-family: 'Rubik 80s Fade', system-ui;
+      font-weight: 400;
+      font-style: normal;
+      line-height: 0.9;
+      letter-spacing: -0.05em;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: clamp(6rem, 15vw, 16rem);
+    }
+
+    .projects {
+      max-width: 100%;
+      margin: 8px;
+      padding: 8px 24px;
+      margin-bottom: 32px;
+      margin-top: 64px;
+    }
+
+    .projects-title {
+      font-weight: 600;
+      margin-bottom: 8px;
+      text-align: center;
+      letter-spacing: -0.05em;
+      font-size: clamp(1.5rem, 3vw, 4rem);
+    }
+
+    .projects-subtitle {
+      font-family: 'Caveat', cursive;
+      color: #666;
+      margin-bottom: 32px;
+      text-align: center;
+      transform: rotate(-3deg) translateX(80px);
+      margin-top: -12px;
+      transition: transform 0.3s;
+      font-size: clamp(1rem, 1.5vw, 1.5rem);
+    }
+
+    .projects-subtitle:hover {
+      transform: rotate(0) translateX(80px);
+    }
+
+    .projects-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .project-card {
+      background-color: var(--card-bg);
+      border-radius: 12px;
+      padding: 24px;
+      transition: box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+      clip-path: inset(0);
+    }
+
+    .project-card:hover {
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    .project-card-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, #FDF3EF 60%, #CBF88A 90%);
+      opacity: 0;
+      border-radius: 12px;
+      transition: opacity 0.5s ease-in-out;
+    }
+
+    .project-card:hover .project-card-overlay {
+      opacity: 1;
+    }
+
+    .project-content {
+      position: relative;
+      z-index: 10;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: start;
+      margin-bottom: 16px;
+    }
+
+    .project-title-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .project-icon {
+      width: clamp(2rem, 2.5vw, 3rem);
+      height: clamp(2rem, 2.5vw, 3rem);
+    }
+
+    .project-title {
+      font-weight: 500;
+      letter-spacing: -0.05em;
+      font-size: clamp(1.2rem, 1.8vw, 1.875rem);
+    }
+
+    .project-arrow {
+      width: 24px;
+      height: 24px;
+    }
+
+    .project-description {
+      max-width: 700px;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 24px;
+      letter-spacing: -0.05em;
+      font-size: clamp(1rem, 1.3vw, 1.5rem);
+    }
+
+    .project-images {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 8px;
+      margin-bottom: -64px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (min-width: 768px) {
+      .project-images {
+        flex-direction: row;
+      }
+    }
+
+    .project-image-container {
+      position: relative;
+      width: 100%;
+      transform: translateX(0) rotate(0);
+      transition: all 0.3s;
+    }
+
+    .project-image-container.left:hover {
+      transform: translateY(-8px) rotate(-3deg);
+    }
+
+    .project-image-container.right {
+      display: none;
+      transform: translateY(16px) rotate(0);
+    }
+
+    .project-image-container.right:hover {
+      transform: translateY(32px) rotate(2deg);
+    }
+
+    @media (min-width: 768px) {
+      .project-image-container {
+        width: 50%;
+      }
+      .project-image-container.right {
+        display: block;
+      }
+    }
+
+    .project-image {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      object-fit: cover;
+    }
+
+    .project-image.left {
+      transform: scale(1);
+    }
+
+    .project-image.right {
+      transform: scale(1.1);
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+      margin: 0 8px;
+      padding: 0 24px;
+      margin-bottom: 64px;
+    }
+
+    @media (min-width: 768px) {
+      .experience-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .experience-card, .tech-stack-card {
+      background-color: white;
+      border-radius: 12px;
+      padding: 24px 32px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+    }
+
+    .experience-title {
+      font-size: clamp(1.6rem, 2vw, 1.875rem);
+      font-weight: 500;
+      margin-bottom: 24px;
+      letter-spacing: -0.05em;
+    }
+
+    .experience-description {
+      max-width: 700px;
+      font-weight: 500;
+      color: #666;
+      margin-bottom: 24px;
+      letter-spacing: -0.05em;
+      font-size: clamp(1.25rem, 1.5vw, 1.5rem);
+    }
+
+    .experience-logos {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+    }
+
+    .experience-logo {
+      width: auto;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    .tech-stack-title {
+      font-size: clamp(1.6rem, 2vw, 1.875rem);
+      font-weight: 500;
+      margin-bottom: 24px;
+      letter-spacing: -0.05em;
+      text-align: left;
+      padding-left: 12px;
+    }
+
+    .tech-stack-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .tech-icon {
+      width: 52px;
+      height: 52px;
+      transition: transform 0.3s;
+    }
+
+    .tech-icon:hover {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    /* Connect section with lanyard */
+    .connect-section {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 120px 24px 80px;
+      margin-top: 40px;
+      margin-bottom: 80px;
+    }
+
+    .connect-card {
+      position: relative;
+      background-color: white;
+      padding: 32px;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      max-width: 320px;
+      z-index: 5;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .connect-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.15);
+      background-color: #FFFAFC;
+    }
+
+    .connect-lanyard {
+      position: absolute;
+      top: 0;
+      width: 3px;
+      height: 120px;
+      background-color: black;
+      z-index: 3;
+    }
+
+    .connect-photo {
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin-bottom: 16px;
+    }
+
+    .connect-name {
+      font-weight: 600;
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .connect-position {
+      font-size: 16px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .connect-qrcode {
+      width: 140px;
+      height: 140px;
+    }
+
+    .footer {
+      background-color: var(--primary-color);
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-email {
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .footer-social {
+      display: flex;
+      gap: 24px;
+    }
+
+    .social-icon {
+      width: 28px;
+      height: 28px;
+      transition: transform 0.3s ease;
+    }
+    
+    .social-icon:hover {
+      transform: scale(1.2);
+    }
+  </style>
+</head>
+<body>
+  <div class="bg-gradient"></div>
+  <div class="content">
+    <!-- NavBar -->
+    <nav class="navbar">
+      <div class="nav-container">
+        <div class="nav-highlight" id="nav-highlight"></div>
+        
+        <a href="#hola" class="nav-icon" id="nav-icon">
+          <img src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/iconamoon_confused-face-fill.svg" alt="Navigation icon" id="nav-icon-img">
+        </a>
+        
+        <a href="#hola" class="nav-link" data-tab="hola">
+          <span>Hola</span>
+        </a>
+        <a href="#works" class="nav-link" data-tab="works">
+          <span>Works</span>
+        </a>
+        <a href="#experience" class="nav-link" data-tab="experience">
+          <span>Experience</span>
+        </a>
+        <a href="#connect" class="nav-link" data-tab="connect">
+          <span>Contact</span>
+        </a>
+      </div>
+    </nav>
+
+    <!-- Perkenalan -->
+    <section id="hola" class="hero">
+      <p class="hero-description">
+        Just a tech nerd who loves problem-solving, optimizing systems, and learning new things!
+      </p>
+      <h1 class="hero-title">
+        <span>Arqila</span>
+        <span>Surya</span>
+        <span>Putra</span>
+      </h1>
+    </section>
+
+    <!-- project -->
+    <section id="works" class="projects">
+      <h2 class="projects-title">Things i made...</h2>
+      <p class="projects-subtitle">(and they actually work!)</p>
+
+      <div class="projects-grid">
+        <!-- project 1 -->
+        <div class="project-card">
+          <div class="project-card-overlay"></div>
+          <div class="project-content">
+            <div class="project-header">
+              <div class="project-title-container">
+                <img class="project-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/draftanakitb_black1.svg" alt="DraftAnakITB icon">
+                <span class="project-title">DraftAnakITB</span>
+              </div>
+              <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </div>
+            <p class="project-description">
+              Where ITB students share their unfiltered thoughts anonymously, freely, and for everyone to see on @DraftAnakITB.
+            </p>
+            <div class="project-images">
+              <div class="project-image-container left">
+                <img class="project-image left" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/draftanakitb_pic1.png" alt="DraftAnakITB Interface 1">
+              </div>
+              <div class="project-image-container right">
+                <img class="project-image right" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/draftanakitb_pic2.png" alt="DraftAnakITB Interface 2">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- project 2 -->
+        <div class="project-card">
+          <div class="project-card-overlay"></div>
+          <div class="project-content">
+            <div class="project-header">
+              <div class="project-title-container">
+                <img class="project-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/ludic-black.svg" alt="Ludic icon">
+                <span class="project-title">Ganesha Exhibition Programme 2025</span>
+              </div>
+              <svg class="project-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 17L17 7M17 7H7M17 7V17" />
+              </svg>
+            </div>
+            <p class="project-description">
+              A digital front door to LFM ITB's annual exhibition, celebrating creativity and storytelling.
+            </p>
+            <div class="project-images">
+              <div class="project-image-container left">
+                <img class="project-image left" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/ludic_pic1.png" alt="Ludic Interface 1">
+              </div>
+              <div class="project-image-container right">
+                <img class="project-image right" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/ludic_pic4.png" alt="Ludic Interface 2">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pengalaman -->
+    <section id="experience" class="experience-grid">
+      <div class="experience-card">
+        <h2 class="experience-title">Experience</h2>
+        <p class="experience-description">
+          Bringing ideas to life through technology, I've worked across different roles, from leading event tech operations to developing platforms that enhance user experiences. Whether it's building scalable systems, optimizing performance, or crafting seamless UI, I love turning challenges into functional solutions.
+        </p>
+        <div class="experience-logos">
+          <img class="experience-logo" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/draftanakitb_logo.svg" alt="DraftAnakITB Logo" width="80">
+          <img class="experience-logo" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/ludic_logo.png" alt="Ludic Logo" width="80">
+          <img class="experience-logo" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/gsis_logo.svg" alt="GSIS Logo" width="80">
+        </div>
+      </div>
+
+      <div class="tech-stack-card">
+        <h2 class="tech-stack-title">And here's my tech stack...</h2>
+        <div class="tech-stack-container">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/c.svg" alt="C">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/java.svg" alt="Java">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/expressjs.svg" alt="Express.js">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/react.svg" alt="React">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/nextjs.svg" alt="Next.js"">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/git.svg" alt="Git">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/html.svg" alt="HTML">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/css.svg" alt="CSS">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/js.svg" alt="JavaScript">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/ts.svg" alt="TypeScript">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/react.svg" alt="React Native" onerror="this.src='https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg'">
+          <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/python.svg" alt="Python">
+          <!-- <img class="tech-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/php.svg" alt="PHP"> -->
+        </div>
+      </div>
+    </section>
+
+    <!-- lanyard wannabe -->
+    <section id="connect" class="connect-section">
+      <div class="connect-lanyard"></div>
+      <a href="mailto:arqilasp@gmail.com" class="connect-card">
+        <img class="connect-photo" src="https://media.licdn.com/dms/image/v2/D5603AQFpHCxLkb8Iiw/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1726499764827?e=1748476800&v=beta&t=M_36lQOTnVXKh7f27ZgPo4S3HSjT5e-pIEIqkJB3SVA" alt="Arqila Surya Putra" onerror="this.src='https://placehold.co/150x150'">
+        <h3 class="connect-name">ARQILA S.P.</h3>
+        <p class="connect-position">LET'S CONNECT →</p>
+        <img class="connect-qrcode" src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=mailto:arqilasp@gmail.com" alt="Connect QR Code">
+      </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-email">arqilasp@gmail.com</div>
+      <div class="footer-social">
+        <a href="https://github.com/pablonification" target="_blank">
+          <img class="social-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/github.svg" alt="GitHub">
+        </a>
+        <a href="https://instagram.com/arqilasp" target="_blank">
+          <img class="social-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/instagram.svg" alt="Instagram">
+        </a>
+        <a href="https://www.linkedin.com/in/arqila-surya-putra-342160237/" target="_blank">
+          <img class="social-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/linkedin.svg" alt="LinkedIn">
+        </a>
+        <a href="https://github.com/arqilasurya" target="_blank">
+          <img class="social-icon" src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/letterboxd.svg" alt="GitHub">
+        </a>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const navLinks = document.querySelectorAll('.nav-link');
+      const navHighlight = document.getElementById('nav-highlight');
+      const iconImg = document.getElementById('nav-icon-img');
+      const navIcon = document.getElementById('nav-icon');
+      let activeTab = 'hola';
+      let isAnimating = false;
+
+      // Function to update highlight position
+      function updateHighlight(target) {
+        if (!target || isAnimating) return;
+        
+        isAnimating = true;
+        const containerPadding = parseInt(window.getComputedStyle(target.parentNode).paddingLeft) || 0;
+        const { offsetLeft, offsetWidth } = target;
+        
+        navHighlight.style.width = `${offsetWidth}px`;
+        navHighlight.style.transform = `translateX(${offsetLeft - containerPadding}px)`;
+
+        setTimeout(() => {
+          isAnimating = false;
+        }, 500);
+      }
+
+      function initHighlight() {
+        const activeElement = document.querySelector(`[data-tab="${activeTab}"]`);
+        if (activeElement) {
+          updateHighlight(activeElement);
+        }
+      }
+
+      navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          if (isAnimating) return;
+          
+          const sectionId = this.getAttribute('data-tab');
+          const section = document.getElementById(sectionId);
+          
+          if (section) {
+            const offset = sectionId === 'connect' ? 0 : window.innerHeight * 0.15;
+            window.scrollTo({
+              top: section.offsetTop - offset,
+              behavior: 'smooth'
+            });
+          }
+          
+          activeTab = sectionId;
+          updateHighlight(this);
+        });
+      });
+
+      navIcon.addEventListener('click', function(e) {
+        e.preventDefault();
+        if (isAnimating) return;
+        
+        iconImg.classList.add('spinning');
+        window.scrollTo({
+          top: 0,
+          behavior: 'smooth'
+        });
+        
+        activeTab = 'hola';
+        const holaElement = document.querySelector('[data-tab="hola"]');
+        updateHighlight(holaElement);
+        
+        setTimeout(() => {
+          iconImg.classList.remove('spinning');
+        }, 500);
+      });
+
+      // Scroll
+      function handleScroll() {
+        const sections = ['hola', 'works', 'experience', 'connect'];
+        const scrollPosition = window.scrollY;
+        const defaultOffset = window.innerHeight * 0.15;
+
+        for (const section of sections) {
+          const element = document.getElementById(section);
+          if (element) {
+            const { offsetTop, offsetHeight } = element;
+            const offset = section === 'connect' ? window.innerHeight * 0.3 : defaultOffset;
+            
+            if (
+              scrollPosition >= offsetTop - offset && 
+              scrollPosition < offsetTop + offsetHeight - offset
+            ) {
+              if (activeTab !== section) {
+                activeTab = section;
+                const target = document.querySelector(`[data-tab="${section}"]`);
+                updateHighlight(target);
+              }
+              break;
+            }
+          }
+        }
+      }
+
+      window.addEventListener('scroll', handleScroll, { passive: true });
+
+      initHighlight();
+      handleScroll();
+
+      // hover project card
+      const projectCards = document.querySelectorAll('.project-card');
+      projectCards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+          this.querySelector('.project-card-overlay').style.opacity = 1;
+        });
+        
+        card.addEventListener('mouseleave', function() {
+          this.querySelector('.project-card-overlay').style.opacity = 0;
+        });
+      });
+    });
+  </script>
+</body>
+</html>
