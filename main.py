@@ -53,23 +53,22 @@ async def get_motd_html(session: SessionDep):
         <title>Message of the Day</title>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Rubik+80s+Fade&display=swap" rel="stylesheet">
         <style>
-            :root {{
+            :root {
                 --primary-color: #FFB7C3;
                 --secondary-color: #BCF4F5;
                 --card-bg: #F5F5F5;
                 --text-color: #575757;
-                --nav-highlight: #ffb7c3;
-            }}
+            }
             
-            * {{
+            * {
                 margin: 0;
                 padding: 0;
                 box-sizing: border-box;
-            }}
+            }
 
-            body {{
+            body {
                 font-family: 'Inter', sans-serif;
                 min-height: 100vh;
                 display: flex;
@@ -77,150 +76,16 @@ async def get_motd_html(session: SessionDep):
                 background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
                 margin: 0;
                 padding: 20px;
-            }}
+            }
 
-            .navbar {{
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                z-index: 50;
-                padding: 12px;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 16px;
-            }}
-
-            .nav-container {{
-                background-color: black;
-                color: white;
-                border-radius: 20px;
-                padding: 4px 6px;
-                display: flex;
-                align-items: center;
-                position: relative;
-                overflow: hidden;
-            }}
-
-            .nav-highlight {{
-                position: absolute;
-                height: 85%;
-                transform: translateX(0);
-                background-color: var(--nav-highlight);
-                border-radius: 16px;
-                transition: all 0.5s ease-out;
-                opacity: 0.75;
-            }}
-
-            .nav-icon {{
-                position: relative;
-                padding: 4px 8px;
-                display: inline-block;
-            }}
-
-            .nav-icon img {{
-                width: 24px;
-                height: 24px;
-                position: relative;
-                z-index: 10;
-                transition: transform 0.5s;
-            }}
-
-            .nav-link {{
-                position: relative;
-                padding: 4px 8px;
-                font-size: 16px;
-                font-weight: 500;
-                white-space: nowrap;
-                transition: color 0.3s;
-                text-decoration: none;
-                color: rgba(255, 255, 255, 0.9);
-            }}
-
-            .nav-link span {{
-                position: relative;
-                z-index: 10;
-                transition: color 0.3s;
-            }}
-
-            .motd-link {{
-                display: inline-flex;
-                align-items: center;
-                gap: 8px;
-                color: black;
-                text-decoration: none;
-                font-weight: 500;
-                padding: 8px 16px;
-                border-radius: 20px;
-                transition: all 0.3s;
-                background: white;
-                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-                white-space: nowrap;
-                font-size: 14px;
-            }}
-
-            .motd-link:hover {{
-                transform: translateY(-2px);
-                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
-            }}
-
-            .motd-arrow {{
-                width: 16px;
-                height: 16px;
-                transition: transform 0.3s;
-            }}
-
-            .motd-link:hover .motd-arrow {{
-                transform: translateX(4px);
-            }}
-
-            @media (max-width: 480px) {{
-                .navbar {{
-                    padding: 8px;
-                    gap: 8px;
-                }}
-
-                .nav-container {{
-                    padding: 4px 6px;
-                }}
-
-                .nav-link {{
-                    font-size: 13px;
-                    padding: 4px 6px;
-                }}
-
-                .motd-link {{
-                    padding: 4px 10px;
-                    font-size: 13px;
-                    height: 28px;
-                }}
-
-                .nav-icon img {{
-                    width: 18px;
-                    height: 18px;
-                }}
-            }}
-
-            @media (max-width: 360px) {{
-                .nav-link span {{
-                    display: none;
-                }}
-
-                .nav-link[data-tab="home"] span {{
-                    display: inline;
-                }}
-            }}
-
-            .content {{
+            .content {
                 flex: 1;
                 display: flex;
                 justify-content: center;
                 align-items: center;
-                padding-top: 80px;
-            }}
+            }
 
-            .motd-container {{
+            .motd-container {
                 background-color: white;
                 padding: 32px;
                 border-radius: 12px;
@@ -228,11 +93,12 @@ async def get_motd_html(session: SessionDep):
                 text-align: center;
                 max-width: 600px;
                 width: 90%;
+                transition: transform 0.3s ease;
                 position: relative;
                 overflow: hidden;
-            }}
+            }
 
-            .motd-container::before {{
+            .motd-container::before {
                 content: '';
                 position: absolute;
                 top: 0;
@@ -240,17 +106,21 @@ async def get_motd_html(session: SessionDep):
                 right: 0;
                 height: 4px;
                 background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-            }}
+            }
 
-            h1 {{
+            .motd-container:hover {
+                transform: translateY(-8px);
+            }
+
+            h1 {
                 color: #2c3e50;
                 margin-bottom: 20px;
                 font-weight: 600;
                 font-size: clamp(1.6rem, 2vw, 1.875rem);
                 letter-spacing: -0.05em;
-            }}
+            }
 
-            .motd-text {{
+            .motd-text {
                 font-size: clamp(1.25rem, 1.5vw, 1.5rem);
                 color: var(--text-color);
                 line-height: 1.6;
@@ -258,40 +128,68 @@ async def get_motd_html(session: SessionDep):
                 font-style: italic;
                 margin-bottom: 24px;
                 letter-spacing: -0.05em;
-            }}
+                position: relative;
+            }
 
-            .creator-text {{
-                font-size: 0.9em;
-                color: #666;
-                margin-bottom: 24px;
-            }}
+            .motd-text::before,
+            .motd-text::after {
+                content: '"';
+                font-family: 'Rubik 80s Fade', system-ui;
+                font-size: 3em;
+                color: var(--primary-color);
+                position: absolute;
+                opacity: 0.5;
+            }
 
-            .error-text {{
+            .motd-text::before {
+                left: -20px;
+                top: -20px;
+            }
+
+            .motd-text::after {
+                right: -20px;
+                bottom: -40px;
+            }
+
+            .error-text {
                 font-size: 1.1em;
                 color: #e74c3c;
                 font-weight: 400;
                 margin-bottom: 16px;
-            }}
+            }
+
+            .creator-text {
+                font-size: 0.9em;
+                color: #666;
+                margin-top: -16px;
+                margin-bottom: 24px;
+            }
+
+            .button {
+                display: inline-flex;
+                align-items: center;
+                gap: 8px;
+                color: #3498db;
+                text-decoration: none;
+                font-weight: 500;
+                transition: all 0.3s;
+                padding: 8px 16px;
+                border-radius: 8px;
+                background-color: #f8f9fa;
+            }
+
+            .button:hover {
+                background-color: #e9ecef;
+                transform: translateY(-2px);
+            }
+
+            .button svg {
+                width: 16px;
+                height: 16px;
+            }
         </style>
     </head>
     <body>
-        <nav class="navbar">
-            <div class="nav-container">
-                <div class="nav-highlight"></div>
-                <a href="/" class="nav-icon">
-                    <img src="https://raw.githubusercontent.com/pablonification/portfolio-arqila/refs/heads/main/public/iconamoon_confused-face-fill.svg" alt="Navigation icon">
-                </a>
-                <a href="/" class="nav-link" data-tab="home">
-                    <span>Home</span>
-                </a>
-            </div>
-            <a href="/motd" class="motd-link">
-                <span>✨ MOTD</span>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="motd-arrow">
-                    <path d="M5 12h14M12 5l7 7-7 7"/>
-                </svg>
-            </a>
-        </nav>
         <div class="content">
             <div class="motd-container">
                 {content}
@@ -305,7 +203,12 @@ async def get_motd_html(session: SessionDep):
         error_content = """
             <h1>Message Not Found</h1>
             <p class="error-text">No message of the day available at the moment.</p>
-            <p class="creator-text">Try again later or add a new message!</p>
+            <a href="/" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M19 12H5M12 19l-7-7 7-7"/>
+                </svg>
+                Back to Home
+            </a>
         """
         return HTMLResponse(content=html_content_base.format(content=error_content), status_code=404)
     
@@ -315,6 +218,12 @@ async def get_motd_html(session: SessionDep):
         <h1>Message of the Day</h1>
         <p class="motd-text">{random_motd.motd}</p>
         <p class="creator-text">Posted by {random_motd.creator}</p>
+        <a href="/" class="button">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M19 12H5M12 19l-7-7 7-7"/>
+            </svg>
+            Back to Home
+        </a>
     """
     
     return HTMLResponse(content=html_content_base.format(content=motd_content))
