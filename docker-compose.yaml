@@ -1,5 +1,3 @@
-version: '3.8' 
-
 services:
   webserver: 
     container_name: motd_app_compose
