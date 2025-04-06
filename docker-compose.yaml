@@ -1,0 +1,13 @@
+version: '3.8' 
+
+services:
+  webserver: 
+    container_name: motd_app_compose
+    build: . 
+    ports:
+      - "17787:17787" 
+    volumes:
+      - motd_data:/app 
+
+volumes:
+  motd_data: 
