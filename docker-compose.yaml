@@ -5,7 +5,8 @@ services:
     ports:
       - "17787:17787" 
     volumes:
-      - motd_data:/app 
+      - .:/app 
+    restart: unless-stopped
 
 volumes:
   motd_data: 

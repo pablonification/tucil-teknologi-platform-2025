@@ -238,7 +238,7 @@ async def get_motd_html(session: SessionDep):
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M4 4v7h7V4H4zm9 0v7h7V4h-7zm-9 9v7h7v-7H4zm9 0v7h7v-7h-7z"/>
                 </svg>
-                Random Message
+                Randomize Message
             </a>
         </div>
     """.format(random_motd.motd, random_motd.creator)
