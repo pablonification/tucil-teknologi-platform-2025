@@ -176,6 +176,7 @@ async def get_motd_html(session: SessionDep):
                 padding: 8px 16px;
                 border-radius: 8px;
                 background-color: #f8f9fa;
+                margin: 0 4px;
             }}
 
             .button:hover {{
@@ -186,6 +187,12 @@ async def get_motd_html(session: SessionDep):
             .button svg {{
                 width: 16px;
                 height: 16px;
+            }}
+
+            .button-container {{
+                display: flex;
+                justify-content: center;
+                gap: 12px;
             }}
         </style>
     </head>
@@ -203,28 +210,38 @@ async def get_motd_html(session: SessionDep):
         error_content = """
             <h1>Message Not Found</h1>
             <p class="error-text">No message of the day available at the moment.</p>
+            <div class="button-container">
+                <a href="/" class="button">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Back to Home
+                </a>
+            </div>
+        """
+        return HTMLResponse(content=html_content_base.format(content=error_content), status_code=404)
+    
+    random_motd = random.choice(results)
+    
+    motd_content = """
+        <h1>Message of the Day</h1>
+        <p class="motd-text">{}</p>
+        <p class="creator-text">Posted by {}</p>
+        <div class="button-container">
             <a href="/" class="button">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M19 12H5M12 19l-7-7 7-7"/>
                 </svg>
                 Back to Home
             </a>
-        """
-        return HTMLResponse(content=html_content_base.format(content=error_content), status_code=404)
-    
-    random_motd = random.choice(results)
-    
-    motd_content = f"""
-        <h1>Message of the Day</h1>
-        <p class="motd-text">{random_motd.motd}</p>
-        <p class="creator-text">Posted by {random_motd.creator}</p>
-        <a href="/" class="button">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M19 12H5M12 19l-7-7 7-7"/>
-            </svg>
-            Back to Home
-        </a>
-    """
+            <a href="/motd" class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M4 4v7h7V4H4zm9 0v7h7V4h-7zm-9 9v7h7v-7H4zm9 0v7h7v-7h-7z"/>
+                </svg>
+                Random Message
+            </a>
+        </div>
+    """.format(random_motd.motd, random_motd.creator)
     
     return HTMLResponse(content=html_content_base.format(content=motd_content))
 
